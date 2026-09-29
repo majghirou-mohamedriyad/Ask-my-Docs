@@ -1,4 +1,5 @@
 import os
+import re
 from typing import List, Dict, Any
 from pathlib import Path
 
@@ -157,11 +158,12 @@ class RAGEngine:
 
         chain = prompt_template | self.llm | StrOutputParser()
 
-        # 4. Génération de la réponse
-        answer = chain.invoke({
+        # 4. Génération de la réponse et nettoyage des balises internes
+        raw_answer = chain.invoke({
             "context": context_text,
             "question": question
         })
+        answer = re.sub(r'【.*?】', '', raw_answer).strip()
 
         # 5. Extraction des métadonnées des sources
         sources = []
