@@ -104,12 +104,17 @@ class RAGEngine:
         return self.vector_store
 
     def load_existing_vector_store(self) -> bool:
-        """Charge un index vectoriel existant depuis le disque."""
+        """Charge un index vectoriel existant depuis le disque si des documents y sont presents."""
         try:
+            db_file = VECTOR_DB_DIR / "chroma.sqlite3"
+            if not db_file.exists():
+                return False
             self.vector_store = Chroma(
                 persist_directory=str(VECTOR_DB_DIR),
                 embedding_function=self.embeddings
             )
+            if self.vector_store._collection.count() == 0:
+                return False
             self.retriever = self.vector_store.as_retriever(
                 search_type="similarity",
                 search_kwargs={"k": TOP_K_RESULTS}

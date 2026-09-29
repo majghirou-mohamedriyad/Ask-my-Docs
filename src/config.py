@@ -17,7 +17,7 @@ VECTOR_DB_DIR.mkdir(parents=True, exist_ok=True)
 
 # Paramètres LLM Groq & Embeddings
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-LLM_MODEL = "llama-3.3-70b-versatile"
+LLM_MODEL = "openai/gpt-oss-120b"
 EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
 # Paramètres de chunking
