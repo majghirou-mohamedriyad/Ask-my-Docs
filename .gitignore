@@ -34,3 +34,6 @@ hf_cache/
 # OS
 .DS_Store
 Thumbs.db
+
+# Fichier Git
+.gitignore
